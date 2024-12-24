@@ -2,6 +2,8 @@ package process;
 
 import dictionary.Dictionary;
 
+import java.util.Arrays;
+
 public class Session {
     private final String answer;
     private final char[] userAnswer;
@@ -12,24 +14,22 @@ public class Session {
         this.answer = dictionary.randomWord();
         this.userAnswer = new char[answer.length()];
         this.attempts = 0;
-        this.maxAttempts = 5;
-        for (int i = 0; i < userAnswer.length; ++i) {
-            userAnswer[i] = '*';
-        }
+        this.maxAttempts = maxAttempts;
+        Arrays.fill(userAnswer, '*');
     }
 
-    public GuessResult guess(char guess) {
-        boolean Guess = false;
+    public GuessResult guess(char guessLetter) {
+        boolean guess = false;
         for (int i = 0; i < answer.length(); i++) {
-            if (answer.charAt(i) == guess) {
-                userAnswer[i] = guess;
-                Guess = true;
+            if (answer.charAt(i) == guessLetter) {
+                userAnswer[i] = guessLetter;
+                guess = true;
             }
         }
         ++attempts;
         if (new String(userAnswer).equals(answer)) {
             return new GuessResult.Win(userAnswer, attempts, maxAttempts, "You won!");
-        } else if (Guess) {
+        } else if (guess) {
             --attempts;
             return new GuessResult.SuccessfulGuess(userAnswer, attempts, maxAttempts, "Hit!");
         } else {
