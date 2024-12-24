@@ -2,8 +2,6 @@ package process;
 
 public interface GuessResult {
     char[] state();
-    int attempt();
-    int maxAttempts();
     String message();
 
     record Defeat(char[] state, int attempt, int maxAttempts, String message) implements GuessResult {
